@@ -2,11 +2,13 @@
 #include <Wire.h>
 #include <EEPROM.h>
 
+
 extern "C" { 
   #include <espnow.h> 
 }
 
 #include "RC.h"
+#include "OSC.h"
 
 #define WIFI_CHANNEL 4
 //#define PWMOUT  // normal esc, uncomment for serial esc
