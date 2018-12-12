@@ -81,6 +81,8 @@ void setup()
   if (EEPROM.read(63) != 0x55) Serial.println("Need to do ACC calib");
   ACC_Read();
   
+  OSC_init();
+
   WiFi.mode(WIFI_STA); // Station mode for esp-now 
   WiFi.disconnect();
 
@@ -96,6 +98,7 @@ void setup()
   
   delay(1000); 
   initServo();
+
 }
 
 uint32_t rxt; // receive time, used for falisave
