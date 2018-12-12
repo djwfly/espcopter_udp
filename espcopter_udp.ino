@@ -105,6 +105,14 @@ uint32_t rxt; // receive time, used for falisave
 
 void loop() 
 {
+	OSC_MsgRead();
+
+	if (OSCnewMessage) {
+		OSCnewMessage = 0;
+		processOSCMsg();
+	}
+
+
   uint32_t now,diff; 
   
   //now = millis(); // actual time
