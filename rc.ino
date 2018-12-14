@@ -1,4 +1,4 @@
-
+//#include "rc.h"
 
 void buf_to_rc()
 {
@@ -41,7 +41,6 @@ void mix()
   //Serial.print(servo[3]); Serial.print("  ");  
 }
 
-#if defined PWMOUT //----------------------------------------------
 
 #define pwmpin1 14
 #define pwmpin2 12
@@ -103,23 +102,3 @@ void initServo()
   interrupts();
 }
 
-#else //----------------------------------------------
-
-uint8_t outmsg[5];
-
-void writeServo()
-{
-  outmsg[0] = 0xF5;
-  outmsg[1] = constrain((servo[0]-1000)>>2,0,0xF4);
-  outmsg[2] = constrain((servo[1]-1000)>>2,0,0xF4);
-  outmsg[3] = constrain((servo[2]-1000)>>2,0,0xF4);
-  outmsg[4] = constrain((servo[3]-1000)>>2,0,0xF4);
-  Serial1.write(outmsg,5);
-}
-
-void initServo()
-{
-  Serial1.begin(128000);
-}
-
-#endif //----------------------------------------------

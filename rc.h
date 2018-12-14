@@ -1,5 +1,10 @@
 // Spec of RC data
 
+#ifndef RC_H_
+#define RC_H_
+
+#include <Arduino.h>
+
 #define CHANNELS 8
 #define IN_PIN 2 
 
@@ -29,4 +34,4 @@ RCdataTY RCdata;
 int16_t rcValue[CHANNELS];  // in us, center = 1500
 uint8_t seqno;
 
-
+#endif 

@@ -10,6 +10,15 @@
 
 #include <Arduino.h>
 
+uint8_t OSCpage;
+uint8_t OSCnewMessage;
+float OSCfader[4];
+float OSCxy1_x;
+float OSCxy1_y;
+uint8_t OSCpush[4];
+uint8_t OSCtoggle[2];
+
+
 void OSC_init();
 
 void OSC_MsgSend(char *c, unsigned char msgSize);

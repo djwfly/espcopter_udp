@@ -15,7 +15,7 @@ void t_angle()
   tbuf_pos += sprintf(&t_line[tbuf_pos],"%d",(int)angle[1]);
   t_add(13);
   t_add(10);
-  esp_now_send(NULL, (u8*)t_line, tbuf_pos);
+  //esp_now_send(NULL, (u8*)t_line, tbuf_pos);
 }
 
 void t_gyro()
@@ -27,7 +27,7 @@ void t_gyro()
   tbuf_pos += sprintf(&t_line[tbuf_pos],"%d",gyroADC[2]); 
  t_add(13);
   t_add(10);
-  esp_now_send(NULL, (u8*)t_line, tbuf_pos);
+  //esp_now_send(NULL, (u8*)t_line, tbuf_pos);
 }
 
 void t_acc()
@@ -39,7 +39,7 @@ void t_acc()
   tbuf_pos += sprintf(&t_line[tbuf_pos],"%d",accADC[2]);
   t_add(13);
   t_add(10);
-  esp_now_send(NULL, (u8*)t_line, tbuf_pos);
+  //esp_now_send(NULL, (u8*)t_line, tbuf_pos);
 }
 
 

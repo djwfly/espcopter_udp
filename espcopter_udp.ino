@@ -2,42 +2,17 @@
 #include <Wire.h>
 #include <EEPROM.h>
 
-
-extern "C" { 
-  #include <espnow.h> 
-}
-
-#include "RC.h"
+#include "rc.h"
 #include "OSC.h"
 
+
 #define WIFI_CHANNEL 4
-//#define PWMOUT  // normal esc, uncomment for serial esc
+
 //#define ARMSWITCH
 
 volatile boolean recv;
 volatile int peernum = 0;
 
-void recv_cb(u8 *macaddr, u8 *data, u8 len)
-{
-  recv = true;
-  //Serial.print("recv_cb ");
-  //Serial.println(len); 
-  if (len == RCdataSize) 
-  {
-    for (int i=0;i<RCdataSize;i++) RCdata.data[i] = data[i];
-  }
-  if (!esp_now_is_peer_exist(macaddr))
-  {
-    Serial.println("adding peer ");
-    esp_now_add_peer(macaddr, ESP_NOW_ROLE_COMBO, WIFI_CHANNEL, NULL, 0);
-    peernum++;
-  }
-};
-
-void send_cb(uint8_t* mac, uint8_t sendStatus) 
-{
-  //Serial.print("send_cb ");
-};
 
 #define ACCRESO 4096
 #define CYCLETIME 4
@@ -70,6 +45,30 @@ static int8_t oldflightmode;
 boolean armed = false;
 uint8_t armct = 0;
 
+void initWifiAP() {
+  //Serial.println("Setting up WiFi AP...");
+  if (WiFi.softAP("espCopter", "12345678")) {
+    Serial.println("Wifi AP set up successfully");
+  }
+  WiFi.softAPConfig(IPAddress(192, 168, 4, 1), IPAddress(192, 168, 4, 1),
+                    IPAddress(255, 255, 255, 0));
+}
+
+void processOSCMsg() {
+  if (OSCpage == 1) 
+ {
+    rcValue[THR] = (uint16_t)(1000+OSCfader[0]*10000);
+	rcValue[PIT]=(uint16_t)(1000+OSCxy1_y*10000);
+	rcValue[ROL]=(uint16_t)(1000+OSCxy1_x*10000);
+	rcValue[RUD ] = (uint16_t)(1000+OSCfader[1]*10000);  
+  rcValue[AU1] = (uint16_t)(1000+OSCfader[2]*10000); 
+    }
+  OSC_MsgRead();
+    
+  }
+
+void initServo();
+
 void setup() 
 {
   Serial.begin(115200); Serial.println();
@@ -83,23 +82,14 @@ void setup()
   
   OSC_init();
 
-  WiFi.mode(WIFI_STA); // Station mode for esp-now 
-  WiFi.disconnect();
+  initWifiAP();
 
-  Serial.printf("This mac: %s, ", WiFi.macAddress().c_str()); 
-  Serial.printf(", channel: %i\n", WIFI_CHANNEL); 
-
-  if (esp_now_init() != 0) Serial.println("*** ESP_Now init failed");
-
-  esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
-
-  esp_now_register_recv_cb(recv_cb);
-  esp_now_register_send_cb(send_cb);
-  
   delay(1000); 
   initServo();
 
 }
+
+
 
 uint32_t rxt; // receive time, used for falisave
 
@@ -107,20 +97,14 @@ void loop()
 {
 	OSC_MsgRead();
 
-	if (OSCnewMessage) {
-		OSCnewMessage = 0;
-		processOSCMsg();
-	}
-
-
-  uint32_t now,diff; 
+	 uint32_t now,diff; 
   
   //now = millis(); // actual time
 
-  if (recv)
+  if (OSCnewMessage)
   {
-    recv = false;    
-    buf_to_rc();
+   OSCnewMessage = 0;
+		processOSCMsg();
 
     if      (rcValue[AU1] < 1300) flightmode = GYRO;
     else if (rcValue[AU1] > 1700) flightmode = RTH;
