@@ -8,6 +8,7 @@
         "${projectRoot}..\\..\\..\\..\\AppData\\Local\\arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\libraries\\ESP8266WiFi\\src",
         "${projectRoot}..\\..\\..\\..\\AppData\\Local\\arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\libraries\\Wire",
         "${projectRoot}..\\..\\..\\..\\AppData\\Local\\arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\libraries\\EEPROM",
+        "${projectRoot}..\\..\\..\\..\\AppData\\Local\\arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\libraries\\esp8266\\src",
         "${projectRoot}..\\..\\..\\..\\..\\..\\Program Files (x86)\\Arduino\\libraries",
         "${projectRoot}..\\..\\..\\..\\AppData\\Local\\arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\libraries",
         "${projectRoot}..\\..\\..\\..\\Documents\\Arduino\\libraries",
