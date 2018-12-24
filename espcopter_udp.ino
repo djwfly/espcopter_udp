@@ -175,8 +175,8 @@ void loop()
   //Serial.print(accADC[2]); Serial.println("  ");
 
   getEstimatedAttitude();
-  //Serial.print(angle[0]); Serial.print("  ");
-  //Serial.print(angle[1]); Serial.println("  ");
+  Serial.print(angle[0]); Serial.print("  ");
+  Serial.print(angle[1]); Serial.println("  ");
 
   pid();
 

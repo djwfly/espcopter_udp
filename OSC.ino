@@ -7,7 +7,7 @@
 
 //#include "OSC.h"
 #include <WiFiUdp.h>
-#define OSCDEBUG
+//#define OSCDEBUG
 
 // for DEBUG uncomment this lines...
 //#define OSCDEBUG 0

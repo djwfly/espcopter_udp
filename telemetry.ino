@@ -1,3 +1,5 @@
+#include <dummy.h>
+#include <dummy.h>
 
 uint8_t tbuf_pos;
 char t_line[32];
